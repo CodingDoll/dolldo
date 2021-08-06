@@ -20,6 +20,7 @@ const SideBar: React.FC = () => {
       {todoStore.lists.map(i => (
         <ListItem title={i.title} key={i.id}></ListItem>
       ))}
+      <ListItem icon="home-5-line" title="任务" status={1}></ListItem>
       <CreateBtn></CreateBtn>
     </div>
   );
