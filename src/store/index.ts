@@ -14,7 +14,7 @@ export interface Todo {
   title: string;
 }
 
-interface List {
+export interface List {
   id: string;
   icon: string;
   title: string;
@@ -34,8 +34,19 @@ export class TodoStore {
   ];
   userLists: List[] = [];
 
+  private _currList: List = this.defaultLists[0];
+
   constructor() {
     makeAutoObservable(this);
+  }
+
+  set currList(value: any) {
+    
+    this._currList = value;
+  }
+
+  get currList() {
+    return this._currList;
   }
 
   getAllTodos() {

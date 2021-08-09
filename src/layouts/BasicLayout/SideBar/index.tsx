@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { observer } from "mobx-react-lite";
 
 import ListItem, { ListItemType } from "./MenuItem";
 import CreateBtn from "./CreateBtn";
 import { TodoContext } from "@store";
-import { useContext } from "react";
-import { observer } from "mobx-react-lite";
 
 const SideBar: React.FC = () => {
   const todoStore = useContext(TodoContext);
@@ -19,7 +18,7 @@ const SideBar: React.FC = () => {
     setEditingId("");
   };
 
-  const [activedId, setActivedId] = useState<string>("");
+  const [activedId, setActivedId] = useState<string>("0");
   const handleSelect = (id: string) => {
     setActivedId(id);
   };
