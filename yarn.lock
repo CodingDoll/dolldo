@@ -301,6 +301,11 @@
   resolved "https://registry.nlark.com/@types/history/download/@types/history-4.7.9.tgz#1cfb6d60ef3822c589f18e70f8b12f9a28ce8724"
   integrity sha1-HPttYO84IsWJ8Y5w+LEvmijOhyQ=
 
+"@types/lodash@^4.14.172":
+  version "4.14.172"
+  resolved "https://registry.nlark.com/@types/lodash/download/@types/lodash-4.14.172.tgz?cache=0&sync_timestamp=1627979626480&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Flodash%2Fdownload%2F%40types%2Flodash-4.14.172.tgz#aad774c28e7bfd7a67de25408e03ee5a8c3d028a"
+  integrity sha1-qtd0wo57/Xpn3iVAjgPuWow9Aoo=
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.nlark.com/@types/parse-json/download/@types/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"

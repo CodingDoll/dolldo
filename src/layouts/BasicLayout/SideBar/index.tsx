@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-import ListItem from "./ListItem";
+import ListItem, { ListItemType } from "./MenuItem";
 import CreateBtn from "./CreateBtn";
 import { TodoContext } from "@store";
 import { useContext } from "react";
@@ -9,19 +9,53 @@ import { observer } from "mobx-react-lite";
 const SideBar: React.FC = () => {
   const todoStore = useContext(TodoContext);
 
+  const [editingId, setEditingId] = useState<string>("");
+  const addList = () => {
+    setActivedId("");
+    setEditingId(todoStore.addList());
+  };
+  const handleEdited = (title: string) => {
+    todoStore.editList(editingId, { title });
+    setEditingId("");
+  };
+
+  const [activedId, setActivedId] = useState<string>("");
+  const handleSelect = (id: string) => {
+    setActivedId(id);
+  };
+
+  const getCurrentType = (id: string) => {
+    if (id === editingId) return ListItemType.Editing;
+    if (id === activedId) return ListItemType.Actived;
+    return ListItemType.Normal;
+  };
+
   return (
-    <div className="w-80 min-h-screen bg-gray-800">
+    <div className="w-80 min-h-screen bg-black bg-opacity-90">
       <div className="text-white p-3 font-thin text-opacity-60 text-sm">
         Dolldo
       </div>
-      <ListItem icon="sun-line" title="我的一天"></ListItem>
-      <ListItem icon="home-5-line" title="任务"></ListItem>
-      <hr className="border-opacity-25 mx-6 my-2" />
-      {todoStore.lists.map(i => (
-        <ListItem title={i.title} key={i.id}></ListItem>
+      {todoStore.defaultLists.map(item => (
+        <ListItem
+          key={item.id}
+          icon={item.icon}
+          title={item.title}
+          type={getCurrentType(item.id)}
+          onSelect={() => handleSelect(item.id)}
+        ></ListItem>
       ))}
-      <ListItem icon="home-5-line" title="任务" status={1}></ListItem>
-      <CreateBtn></CreateBtn>
+      <hr className="border-opacity-25 mx-6 my-2" />
+      {todoStore.userLists.map(item => (
+        <ListItem
+          key={item.id}
+          icon={item.icon}
+          title={item.title}
+          type={getCurrentType(item.id)}
+          onBlur={handleEdited}
+          onSelect={() => handleSelect(item.id)}
+        ></ListItem>
+      ))}
+      <CreateBtn addList={addList}></CreateBtn>
     </div>
   );
 };
