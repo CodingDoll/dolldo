@@ -9,15 +9,15 @@ import TodoList from "@components/TodoList";
 const Content: React.FC = () => {
   const todoStore = useContext(TodoContext);
   const todos = todoStore.getAllTodos(todoStore.currList.id);
-  
+
   const iconClass =
     todoStore.currList.icon !== "list-unordered"
       ? "mr-4 ri-" + todoStore.currList.icon
       : "";
 
   return (
-    <div className="content-container flex-1 flex flex-col pt-8 px-8">
-      <div className="title flex-none flex relative text-white text-2xl font-semibold">
+    <div className="content-container flex-1 flex flex-col pt-8 px-8 max-h-screen">
+      <div className="title pb-4 flex relative text-white text-2xl font-semibold">
         <i className={iconClass}></i>
         <div>{todoStore.currList.title}</div>
       </div>

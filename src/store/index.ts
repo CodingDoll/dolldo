@@ -10,7 +10,7 @@ interface Group {
 }
 
 export interface Todo {
-  listId: string;
+  listId: string[];
   id: string;
   title: string;
 }
@@ -48,6 +48,11 @@ export class TodoStore {
       this.currList =
         this.userLists.find(i => i.id === id) ?? this.defaultLists[0];
     }
+  }
+
+  addTodo(listId: string, data: { title: string }) {
+    const todo = { id: nanoid(), listId: [listId], title: data.title };
+    this.todos.push(todo);
   }
 
   getAllTodos(listId?: string) {

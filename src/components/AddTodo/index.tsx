@@ -1,4 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
+
+import { TodoContext } from "@store";
 
 enum AddTodoStatus {
   Normal,
@@ -6,6 +8,7 @@ enum AddTodoStatus {
 }
 
 const AddTodo: React.FC = () => {
+  const todoStore = useContext(TodoContext);
   const [todoTitle, setTodoTitle] = useState("");
   const [status, setStatus] = useState<AddTodoStatus>(AddTodoStatus.Normal);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -15,12 +18,16 @@ const AddTodo: React.FC = () => {
     inputRef.current?.focus();
   };
 
-  const handleAdding = (e: React.BaseSyntheticEvent) => {
-    
+  const handleAdding = () => {
+    if (todoTitle)
+      todoStore.addTodo(todoStore.currList.id, { title: todoTitle });
+    setTodoTitle("");
   };
-
+  const resetStatus = () => {
+    if (!todoTitle) setStatus(AddTodoStatus.Normal);
+  };
   const onEnterUp: React.KeyboardEventHandler<HTMLInputElement> = e => {
-    if (e.key === "Enter") handleAdding(e);
+    if (e.key === "Enter") handleAdding();
   };
 
   return (
@@ -42,7 +49,7 @@ const AddTodo: React.FC = () => {
           type="text"
           placeholder="添加任务"
           value={todoTitle}
-          onBlur={handleAdding}
+          onBlur={resetStatus}
           onKeyUp={onEnterUp}
           onChange={e => setTodoTitle(e.target.value)}
         />
