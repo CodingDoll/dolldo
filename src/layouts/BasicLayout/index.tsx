@@ -10,7 +10,7 @@ const BasicLayout: React.FC = () => {
   return (
     <div className="flex flex-row">
       <SideBar />
-      <Content list={todoStore.currList} />
+      <Content />
     </div>
   );
 };

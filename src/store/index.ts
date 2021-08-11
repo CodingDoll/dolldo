@@ -10,6 +10,7 @@ interface Group {
 }
 
 export interface Todo {
+  listId: string;
   id: string;
   title: string;
 }
@@ -18,51 +19,47 @@ export interface List {
   id: string;
   icon: string;
   title: string;
-  todos: Todo[] | (() => Todo[]);
 }
 
 export class TodoStore {
   groups: Group[] = [];
   defaultLists: List[] = [
-    { id: "0", icon: "sun-line", title: "我的一天", todos: [] },
+    { id: "0", icon: "sun-line", title: "我的一天" },
     {
       id: "1",
       icon: "home-5-line",
-      title: "任务",
-      todos: this.getAllTodos
+      title: "任务"
     }
   ];
   userLists: List[] = [];
+  currList: List = this.defaultLists[0];
 
-  private _currList: List = this.defaultLists[0];
+  todos: Todo[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
-  set currList(value: any) {
-    
-    this._currList = value;
+  setCurrListById(id: string) {
+    if (id.length === 1) {
+      this.currList =
+        this.defaultLists.find(i => i.id === id) ?? this.defaultLists[0];
+    } else {
+      this.currList =
+        this.userLists.find(i => i.id === id) ?? this.defaultLists[0];
+    }
   }
 
-  get currList() {
-    return this._currList;
-  }
-
-  getAllTodos() {
-    let allTodos: Todo[] = [];
-    const todos = this.userLists.map(item => item.todos);
-    allTodos = _.flattenDeep(todos as Todo[][]);
-
-    return allTodos;
+  getAllTodos(listId?: string) {
+    if (listId) return this.todos.filter(i => i.listId.includes(listId));
+    return this.todos;
   }
 
   addList() {
     const l = {
       id: nanoid(),
       icon: "list-unordered",
-      title: "无标题列表",
-      todos: []
+      title: "无标题列表"
     };
     this.userLists.push(l);
     return l.id;

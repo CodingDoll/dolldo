@@ -6,7 +6,7 @@ enum AddTodoStatus {
 }
 
 const AddTodo: React.FC = () => {
-  const [todoTitle, setTodoTitle] = useState("添加任务");
+  const [todoTitle, setTodoTitle] = useState("");
   const [status, setStatus] = useState<AddTodoStatus>(AddTodoStatus.Normal);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -15,9 +15,12 @@ const AddTodo: React.FC = () => {
     inputRef.current?.focus();
   };
 
-  const handleBlur: React.FocusEventHandler<HTMLInputElement> = () => {
-    setStatus(AddTodoStatus.Normal);
-    setTodoTitle("添加任务");
+  const handleAdding = (e: React.BaseSyntheticEvent) => {
+    
+  };
+
+  const onEnterUp: React.KeyboardEventHandler<HTMLInputElement> = e => {
+    if (e.key === "Enter") handleAdding(e);
   };
 
   return (
@@ -37,9 +40,10 @@ const AddTodo: React.FC = () => {
           ref={inputRef}
           className="flex-1 bg-transparent focus:outline-none"
           type="text"
+          placeholder="添加任务"
           value={todoTitle}
-          onFocus={() => setTodoTitle("")}
-          onBlur={handleBlur}
+          onBlur={handleAdding}
+          onKeyUp={onEnterUp}
           onChange={e => setTodoTitle(e.target.value)}
         />
       </div>

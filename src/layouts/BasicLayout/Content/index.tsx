@@ -1,28 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
+import { TodoContext } from "@store";
+import { observer } from "mobx-react-lite";
 
 import "./Content.css";
 import AddTodo from "@components/AddTodo";
 import TodoList from "@components/TodoList";
-import { List } from "@store";
 
-interface ContentProps {
-  list: List;
-}
-
-const Content: React.FC<ContentProps> = props => {
+const Content: React.FC = () => {
+  const todoStore = useContext(TodoContext);
+  const todos = todoStore.getAllTodos(todoStore.currList.id);
+  
   const iconClass =
-    props.list.icon !== "list-unordered" ? "mr-4 ri-" + props.list.icon : "";
+    todoStore.currList.icon !== "list-unordered"
+      ? "mr-4 ri-" + todoStore.currList.icon
+      : "";
 
   return (
     <div className="content-container flex-1 flex flex-col pt-8 px-8">
       <div className="title flex-none flex relative text-white text-2xl font-semibold">
         <i className={iconClass}></i>
-        <div>{props.list.title}</div>
+        <div>{todoStore.currList.title}</div>
       </div>
-      <TodoList />
+      <TodoList todos={todos} />
       <AddTodo />
     </div>
   );
 };
 
-export default Content;
+export default observer(Content);

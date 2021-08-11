@@ -9,18 +9,21 @@ const SideBar: React.FC = () => {
   const todoStore = useContext(TodoContext);
 
   const [editingId, setEditingId] = useState<string>("");
+  const [activedId, setActivedId] = useState<string>("0");
   const addList = () => {
     setActivedId("");
-    setEditingId(todoStore.addList());
+    const id = todoStore.addList();
+    setEditingId(id);
+    todoStore.setCurrListById(id);
   };
   const handleEdited = (title: string) => {
     todoStore.editList(editingId, { title });
     setEditingId("");
+    setActivedId(editingId);
   };
-
-  const [activedId, setActivedId] = useState<string>("0");
   const handleSelect = (id: string) => {
     setActivedId(id);
+    todoStore.setCurrListById(id);
   };
 
   const getCurrentType = (id: string) => {
