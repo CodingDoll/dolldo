@@ -7,7 +7,7 @@ interface CellProps {
 
 const Cell: React.FC<CellProps> = props => {
   return (
-    <div className="cell bg-white flex items-center text-gray-500  px-5 border mb-2">
+    <div className="cell bg-white flex items-center text-gray-500  px-5 border mb-2 hover:bg-gray-100">
       <i className={`ri-${props.icon} mr-4`}></i>
       <div className="title flex-1 py-3">{props.title}</div>
     </div>

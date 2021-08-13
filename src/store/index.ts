@@ -2,6 +2,9 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { nanoid } from "nanoid";
 import _ from "lodash";
+import moment, { Moment } from "moment";
+
+moment();
 
 interface Group {
   id: string;
@@ -11,14 +14,36 @@ interface Group {
 
 export interface Todo {
   listId: string[];
+  status: boolean; // true done; false not done
   id: string;
   title: string;
+
+  step?: Step[];
+  notification?: Moment;
+  deadline?: Moment;
+  repeat?: RepeatOptions;
+  customRepeat?: { count: number; unit: string };
+  description?: string;
 }
 
+export enum RepeatOptions {
+  EveryDay,
+  EveryWeekDay,
+  EveryWeek,
+  EveryMonth,
+  EveryYear,
+  Custom
+}
+
+interface Step {
+  title: string;
+  status: boolean; // true done; false not done
+}
 export interface List {
   id: string;
   icon: string;
   title: string;
+  theme?: string;
 }
 
 export class TodoStore {
@@ -51,7 +76,12 @@ export class TodoStore {
   }
 
   addTodo(listId: string, data: { title: string }) {
-    const todo = { id: nanoid(), listId: [listId], title: data.title };
+    const todo = {
+      id: nanoid(),
+      listId: [listId],
+      title: data.title,
+      status: false
+    };
     this.todos.push(todo);
   }
 
@@ -59,6 +89,9 @@ export class TodoStore {
     if (listId) return this.todos.filter(i => i.listId.includes(listId));
     return this.todos;
   }
+
+  todoDone() {}
+  todoUndone() {}
 
   addList() {
     const l = {

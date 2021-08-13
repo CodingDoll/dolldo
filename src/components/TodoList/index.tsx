@@ -1,21 +1,25 @@
-import React from "react";
+import React, { useContext } from "react";
+import { observer } from "mobx-react-lite";
 
-import "./TodoList.css";
 import TodoItem from "./TodoItem";
-import { Todo } from "@store";
+import { TodoContext, Todo } from "@store";
 
-interface TodoListProps {
-  todos: Todo[];
-}
+const TodoList: React.FC = () => {
+  const todoStore = useContext(TodoContext);
+  const todos = todoStore.getAllTodos(todoStore.currList.id);
 
-const TodoList: React.FC<TodoListProps> = props => {
+  const undoneTodos = todos.filter(i => !i.status);
+  const doneTodos = todos.filter(i => i.status);
   return (
     <div className="todo-list flex-1 py-4 overflow-y-auto">
-      {props.todos.map(i => (
-        <TodoItem title={i.title} />
+      {undoneTodos.map(i => (
+        <TodoItem status={i.status} title={i.title} />
+      ))}
+      {doneTodos.map(i => (
+        <TodoItem status={i.status} title={i.title} />
       ))}
     </div>
   );
 };
 
-export default TodoList;
+export default observer(TodoList);

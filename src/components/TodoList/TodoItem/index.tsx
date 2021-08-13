@@ -4,10 +4,11 @@ import CheckBtn from "@components/CheckBtn";
 
 interface TodoItemProps {
   title: string;
+  status: boolean;
 }
 
 const TodoItem: React.FC<TodoItemProps> = props => {
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState(props.status);
 
   const handleChange = (checked: any) => {
     setChecked(checked);

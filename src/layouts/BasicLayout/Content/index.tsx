@@ -8,7 +8,6 @@ import TodoList from "@components/TodoList";
 
 const Content: React.FC = () => {
   const todoStore = useContext(TodoContext);
-  const todos = todoStore.getAllTodos(todoStore.currList.id);
 
   const iconClass =
     todoStore.currList.icon !== "list-unordered"
@@ -21,7 +20,7 @@ const Content: React.FC = () => {
         <i className={iconClass}></i>
         <div>{todoStore.currList.title}</div>
       </div>
-      <TodoList todos={todos} />
+      <TodoList />
       <AddTodo />
     </div>
   );
