@@ -1,0 +1,16 @@
+.cell-group {
+  @apply bg-white border mb-2;
+}
+
+.cell-group .cell {
+  @apply mb-0 border-none;
+}
+
+.cell-group .cell .title {
+  @apply border-b;
+}
+
+.cell-group .cell:last-child .title {
+  @apply border-none;
+}
+

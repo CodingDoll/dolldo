@@ -1,38 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 
-enum CheckStatus {
-  Unchecked,
-  Hover,
-  Cheked
-}
+import styles from "./CheckBtn.module.css";
 
 interface CheckBtnProps {
   checked: boolean;
+  className?: string;
+  onChange?: (checked: boolean) => void;
 }
 
 const CheckBtn: React.FC<CheckBtnProps> = props => {
-  const [checkStatus, setCheckStatus] = useState<CheckStatus>(
-    CheckStatus.Unchecked
-  );
-  props.checked && setCheckStatus(CheckStatus.Cheked);
+  const actualClass =
+    styles["check-btn"] +
+    " " +
+    props.className +
+    (props.checked
+      ? " ri-checkbox-circle-fill"
+      : " ri-checkbox-blank-circle-line");
 
-  return (
-    <span
-      className="text-white text-opacity-70 text-2xl"
-      onMouseOver={() => setCheckStatus(CheckStatus.Hover)}
-      onMouseLeave={() => setCheckStatus(CheckStatus.Unchecked)}
-    >
-      <i
-        className={
-          props.checked
-            ? "ri-checkbox-cirle-fill"
-            : checkStatus === CheckStatus.Unchecked
-            ? "ri-checkbox-blank-circle-line"
-            : "ri-checkbox-circle-line"
-        }
-      ></i>
-    </span>
-  );
+  const handleClick = () => {
+    if (props.onChange) props.onChange(!props.checked);
+  };
+
+  return <i className={actualClass} onClick={handleClick}></i>;
+};
+
+CheckBtn.defaultProps = {
+  className: "text-white text-opacity-70 text-2xl"
 };
 
 export default CheckBtn;

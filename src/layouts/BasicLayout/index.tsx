@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 
 import SideBar from "./SideBar";
 import Content from "./Content";
+import Detail from "./Detail";
 
 const BasicLayout: React.FC = () => {
   const todoStore = useContext(TodoContext);
@@ -11,6 +12,7 @@ const BasicLayout: React.FC = () => {
     <div className="flex flex-row">
       <SideBar />
       <Content />
+      <Detail />
     </div>
   );
 };

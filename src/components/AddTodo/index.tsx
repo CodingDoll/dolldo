@@ -19,7 +19,7 @@ const AddTodo: React.FC = () => {
   };
 
   const handleAdding = () => {
-    if (todoTitle)
+    if (todoTitle.trim())
       todoStore.addTodo(todoStore.currList.id, { title: todoTitle });
     setTodoTitle("");
   };
