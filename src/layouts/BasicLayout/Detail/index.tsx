@@ -4,6 +4,7 @@ import CheckBtn from "@components/CheckBtn";
 import TodoStep from "@components/TodoStep";
 import Cell from "@components/Cell";
 import CellGroup from "@components/CellGroup";
+import Dropdown from "@components/Dropdown";
 
 const Detail: React.FC = () => {
   return (
@@ -20,7 +21,9 @@ const Detail: React.FC = () => {
         <div className="p-2 ">
           <Cell icon="sun-line" title="添加到“我的一天”" />
           <CellGroup>
+            <Dropdown.Notification />
             <Cell icon="alarm-line" title="提醒我" />
+
             <Cell icon="calendar-todo-line" title="添加截止日期" />
             <Cell icon="repeat-2-line" title="重复" />
           </CellGroup>

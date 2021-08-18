@@ -2,9 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { nanoid } from "nanoid";
 import _ from "lodash";
-import moment, { Moment } from "moment";
-
-moment();
+import { Dayjs } from "dayjs";
 
 interface Group {
   id: string;
@@ -19,8 +17,8 @@ export interface Todo {
   title: string;
 
   step?: Step[];
-  notification?: Moment;
-  deadline?: Moment;
+  notification?: Dayjs;
+  deadline?: Dayjs;
   repeat?: RepeatOptions;
   customRepeat?: { count: number; unit: string };
   description?: string;
