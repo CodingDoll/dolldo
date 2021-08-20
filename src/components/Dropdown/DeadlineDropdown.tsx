@@ -6,8 +6,7 @@ import dayjs from "dayjs";
 
 const DeadlineDropdown: React.FC = () => {
   const DeadlineMenu = (
-    <Menu onClick={(item) => console.log(item)
-    }>
+    <Menu onClick={item => console.log(item)}>
       <Menu.Item className="flex items-center text-gray-500" index="1">
         <i className="ri-calendar-event-line mr-2"></i>
         <span className="flex-1">今天</span>
@@ -27,7 +26,7 @@ const DeadlineDropdown: React.FC = () => {
           {dayjs().add(7, "d").day(1).format("ddd")}
         </span>
       </Menu.Item>
-    </Menu >
+    </Menu>
   );
 
   return (

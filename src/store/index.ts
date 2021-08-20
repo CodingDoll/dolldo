@@ -24,6 +24,8 @@ export interface Todo {
   description?: string;
 }
 
+type TodoOptions = Partial<Omit<Todo, "listId" | "id" | "createAt">>;
+
 export enum RepeatOptions {
   EveryDay,
   EveryWeekDay,
@@ -69,6 +71,7 @@ export class TodoStore {
   }
 
   setCurrListById(id: string) {
+    if (id === this.currList.id) return;
     if (id.length === 1) {
       this.currList =
         this.defaultLists.find(i => i.id === id) ?? this.defaultLists[0];
@@ -76,6 +79,8 @@ export class TodoStore {
       this.currList =
         this.userLists.find(i => i.id === id) ?? this.defaultLists[0];
     }
+
+    this.setCurrTodo(null);
   }
 
   addTodo(listId: string, data: { title: string }) {
@@ -87,6 +92,10 @@ export class TodoStore {
       createAt: dayjs()
     };
     this.todos.push(todo);
+  }
+
+  updateTodo(todo: Todo, options: TodoOptions) {
+    todo = { ...todo, ...options };
   }
 
   removeTodo(todoId: string) {

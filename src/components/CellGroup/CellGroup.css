@@ -10,7 +10,7 @@
   @apply border-b;
 }
 
-.cell-group .cell:last-child .title {
+.cell-group .relative:last-child .title {
   @apply border-none;
 }
 
