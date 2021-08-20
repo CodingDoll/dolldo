@@ -36,9 +36,12 @@ const ListItem: FC<ListItemProps> = props => {
   const titleChange: ChangeEventHandler<HTMLInputElement> = e => {
     setEditingTitle(e.target.value);
   };
-
   const handleBlur: FocusEventHandler<HTMLInputElement> = e => {
     props.onBlur && props.onBlur(e.target.value);
+  };
+  const onEnterUp: React.KeyboardEventHandler<HTMLInputElement> = e => {
+    if (e.key === "Enter" && props.onBlur)
+      props.onBlur((e.target as any).value);
   };
 
   if (props.type === ListItemType.Editing) {
@@ -53,6 +56,7 @@ const ListItem: FC<ListItemProps> = props => {
           ref={editInputRef}
           className="title py-3 focus:outline-none bg-transparent border-none"
           value={editingTitle}
+          onKeyUp={onEnterUp}
           onChange={titleChange}
           onBlur={handleBlur}
         />

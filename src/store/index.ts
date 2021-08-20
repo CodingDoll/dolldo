@@ -2,7 +2,7 @@ import { makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { nanoid } from "nanoid";
 import _ from "lodash";
-import { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from "dayjs";
 
 interface Group {
   id: string;
@@ -15,7 +15,7 @@ export interface Todo {
   status: boolean; // true done; false not done
   id: string;
   title: string;
-
+  createAt: Dayjs;
   step?: Step[];
   notification?: Dayjs;
   deadline?: Dayjs;
@@ -58,9 +58,14 @@ export class TodoStore {
   currList: List = this.defaultLists[0];
 
   todos: Todo[] = [];
+  currTodo: Todo | null = null;
 
   constructor() {
     makeAutoObservable(this);
+  }
+
+  setCurrTodo(todo: Todo | null) {
+    this.currTodo = todo;
   }
 
   setCurrListById(id: string) {
@@ -78,9 +83,15 @@ export class TodoStore {
       id: nanoid(),
       listId: [listId],
       title: data.title,
-      status: false
+      status: false,
+      createAt: dayjs()
     };
     this.todos.push(todo);
+  }
+
+  removeTodo(todoId: string) {
+    const targetIndex = this.todos.findIndex(i => i.id === todoId);
+    this.todos.splice(targetIndex, 1);
   }
 
   getAllTodos(listId?: string) {
@@ -88,8 +99,9 @@ export class TodoStore {
     return this.todos;
   }
 
-  todoDone() {}
-  todoUndone() {}
+  setTodoStatus(todo: Todo, cheked: boolean) {
+    todo.status = cheked;
+  }
 
   addList() {
     const l = {
