@@ -14,12 +14,12 @@ const zhCNRepeatOptions: Record<any, string> = {
 
 type RepeatDropdownProps = {
   value?: RepeatOptions | null;
-  onChange?: (value: RepeatOptions | null | string | number) => void;
+  onChange?: (value: RepeatOptions | null) => void;
 };
 
 const RepeatDropdown: React.FC<RepeatDropdownProps> = props => {
-  const menuClick = (item: any, index: string | number | RepeatOptions) => {
-    props.onChange && props.onChange(index);
+  const menuClick = (item: any, index: string | number | null) => {
+    props.onChange && props.onChange(index as RepeatOptions);
   };
 
   const clear = () => {
