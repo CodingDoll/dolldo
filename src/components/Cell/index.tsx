@@ -29,7 +29,7 @@ const Cell: React.FC<CellProps> = props => {
           <div className="text-xs">{props.caption}</div>
         </div>
       ) : (
-        <div className="title flex-1 py-3">{props.title}</div>
+        <div className={`title flex-1 py-3 ${activedColor}`}>{props.title}</div>
       )}
       {props.actived && (
         <div>

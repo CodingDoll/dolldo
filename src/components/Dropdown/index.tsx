@@ -5,17 +5,17 @@ import React, {
   useEffect,
   useState
 } from "react";
-import { createPortal } from 'react-dom';
+import { createPortal } from "react-dom";
 import NotificationDropdown from "./NotificationDropdown";
 import DeadlineDropdown from "./DeadlineDropdown";
 import RepeatDropdown from "./RepeatDropdown";
 
-import 'animate.css'
+import "animate.css";
 
 interface DropdownComponent<T = {}> extends React.FC<T> {
   Notification: typeof NotificationDropdown;
-  Deadline: typeof DeadlineDropdown
-  Repeat: typeof RepeatDropdown
+  Deadline: typeof DeadlineDropdown;
+  Repeat: typeof RepeatDropdown;
 }
 
 interface DropdownProps {
@@ -27,29 +27,39 @@ interface PopupProps {
 }
 
 const Mask: React.FC = () => {
+  const bodyEl = document.getElementsByTagName("body");
 
-  const bodyEl = document.getElementsByTagName('body')
-
-  return createPortal(<div className="absolute inset-0 opacity-0"></div>, bodyEl[0])
-}
+  return createPortal(
+    <div className="absolute inset-0 opacity-0"></div>,
+    bodyEl[0]
+  );
+};
 
 const Popup: React.FC<PopupProps> = props => {
-
-  const onClick: React.MouseEventHandler = (e) => {
-    e.stopPropagation()
-  }
+  const onClick: React.MouseEventHandler = e => {
+    e.stopPropagation();
+  };
   if (props.visible)
-    return <>
-      <Mask />
-      <div onClick={onClick} className={"absolute z-50 w-60 left-0 p-2 shadow bg-white rounded "}>{props.children}</div></>;
-  else return <></>
+    return (
+      <>
+        <Mask />
+        <div
+          className={
+            "absolute m-2 z-50 w-60 left-0 p-2 shadow bg-white rounded "
+          }
+        >
+          {props.children}
+        </div>
+      </>
+    );
+  else return <></>;
 };
 
 const Dropdown: DropdownComponent<DropdownProps> = props => {
-  const [popupVisible, setPopupVisible] = useState(false);
-  const onClick: React.MouseEventHandler = (e) => {
+  const [popupVisible, setPopupVisible] = useState( false);
+  const onClick: React.MouseEventHandler = e => {
     setPopupVisible(prevState => !prevState);
-    e.stopPropagation()
+    e.stopPropagation();
   };
 
   const child = React.Children.only(props.children) as ReactElement;
@@ -62,8 +72,8 @@ const Dropdown: DropdownComponent<DropdownProps> = props => {
   useEffect(() => {
     window.addEventListener("click", hidePopup);
     return () => {
-      window.removeEventListener('click', hidePopup)
-    }
+      window.removeEventListener("click", hidePopup);
+    };
   }, []);
 
   return (

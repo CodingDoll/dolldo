@@ -17,9 +17,9 @@ export interface Todo {
   title: string;
   createAt: Dayjs;
   step?: Step[];
-  notification?: Dayjs;
-  deadline?: Dayjs;
-  repeat?: RepeatOptions;
+  notification?: Dayjs | null;
+  deadline?: Dayjs | null;
+  repeat?: RepeatOptions | null;
   customRepeat?: { count: number; unit: string };
   description?: string;
 }
@@ -27,7 +27,7 @@ export interface Todo {
 type TodoOptions = Partial<Omit<Todo, "listId" | "id" | "createAt">>;
 
 export enum RepeatOptions {
-  EveryDay,
+  EveryDay = 1,
   EveryWeekDay,
   EveryWeek,
   EveryMonth,
@@ -95,7 +95,9 @@ export class TodoStore {
   }
 
   updateTodo(todo: Todo, options: TodoOptions) {
-    todo = { ...todo, ...options };
+    const targetIndex = this.todos.findIndex(i => i.id === todo.id);
+    this.todos[targetIndex] = { ...todo, ...options };
+    if (this.currTodo?.id === todo.id) this.currTodo = this.todos[targetIndex];
   }
 
   removeTodo(todoId: string) {

@@ -42,6 +42,7 @@ const AddTodo: React.FC = () => {
               ? "ri-add-line"
               : "ri-checkbox-blank-circle-line") + " text-lg mr-4"
           }
+          onClick={handleAdding}
         ></i>
         <input
           ref={inputRef}
