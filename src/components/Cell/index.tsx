@@ -32,9 +32,7 @@ const Cell: React.FC<CellProps> = props => {
         <div className={`title flex-1 py-3 ${activedColor}`}>{props.title}</div>
       )}
       {props.actived && (
-        <div>
-          <i className="ri-close-line text-xl" onClick={handleClear}></i>
-        </div>
+        <i className="ri-close-line text-xl" onClick={handleClear}></i>
       )}
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { RepeatOptions, TodoContext } from "@store";
+import { RepeatOptions, Step, TodoContext } from "@store";
 
 import CheckBtn from "@components/CheckBtn";
 import TodoStep from "@components/TodoStep";
@@ -12,7 +12,6 @@ import { Dayjs } from "dayjs";
 const Detail: React.FC = () => {
   const todoStore = useContext(TodoContext);
   const { currTodo } = todoStore;
-  console.log(currTodo);
 
   const toggleTodoDone = (checked: boolean) => {
     todoStore.setTodoStatus(currTodo!, checked);
@@ -39,6 +38,12 @@ const Detail: React.FC = () => {
     todoStore.updateTodo(currTodo!, { repeat: value });
   };
 
+  const handleStepChange = (value: string | Step[] | null) => {
+    if (typeof value === "string") {
+      todoStore.addTodoStep(currTodo!, value);
+    } else if (value) todoStore.setTodoSteps(currTodo!, value);
+  };
+
   if (currTodo)
     return (
       <div className="flex flex-col w-96 max-h-screen">
@@ -54,11 +59,13 @@ const Detail: React.FC = () => {
                 {currTodo.title}
               </span>
             </div>
-            <TodoStep />
+            <TodoStep value={currTodo.step && [...currTodo.step]} onChange={handleStepChange} />
           </div>
 
           <div className="p-2 ">
-            <Cell icon="sun-line" title="添加到“我的一天”" />
+            {todoStore.currList.id !== "0" && (
+              <Cell icon="sun-line" title="添加到“我的一天”" />
+            )}
             <CellGroup>
               <Dropdown.Notification
                 value={currTodo.notification}
@@ -70,7 +77,7 @@ const Detail: React.FC = () => {
               />
               <Dropdown.Repeat value={currTodo.repeat} onChange={setRepeat} />
             </CellGroup>
-            <Cell icon="attachment-line" title="添加文件" />
+            {/* <Cell icon="attachment-line" title="添加文件" /> */}
           </div>
         </div>
         <div className="footer flex items-center justify-between bg-white p-4 py-2">

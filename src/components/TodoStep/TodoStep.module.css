@@ -1,0 +1,30 @@
+:root {
+}
+
+.todo-step::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  @apply text-blue-500;
+}
+.todo-step:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  @apply text-blue-500;
+}
+.todo-step::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  @apply text-blue-500;
+}
+.todo-step:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  @apply text-blue-500;
+}
+.todo-step::-ms-input-placeholder {
+  /* Microsoft Edge */
+  @apply text-blue-500;
+}
+
+.remove-btn {
+  display: none;
+}
+.todo-step:hover .remove-btn {
+  display: block;
+}

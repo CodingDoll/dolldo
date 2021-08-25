@@ -35,7 +35,8 @@ export enum RepeatOptions {
   Custom
 }
 
-interface Step {
+export interface Step {
+  id: string;
   title: string;
   status: boolean; // true done; false not done
 }
@@ -112,6 +113,21 @@ export class TodoStore {
 
   setTodoStatus(todo: Todo, cheked: boolean) {
     todo.status = cheked;
+  }
+
+  addTodoStep(todo: Todo, stepTitle: string) {
+    if (!todo.step) todo.step = [];
+    const newStep: Step = {
+      id: nanoid(),
+      title: stepTitle,
+      status: false
+    };
+    todo.step.push(newStep);
+    return newStep;
+  }
+
+  setTodoSteps(todo: Todo, todoSteps: Step[]) {
+    todo.step = todoSteps;
   }
 
   addList() {
