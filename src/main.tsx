@@ -6,16 +6,19 @@ import "dayjs/locale/zh-cn";
 import "./index.css";
 import "remixicon/fonts/remixicon.css";
 import App from "./App";
-import { TodoContext, TodoStore } from "./store";
+import { TodoContext, todoStore } from "./store";
 
 dayjs.locale("zh-cn");
 dayjs.extend(relativeTime);
 
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <TodoContext.Provider value={new TodoStore()}>
+    <TodoContext.Provider value={todoStore}>
       <App />
     </TodoContext.Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );
+

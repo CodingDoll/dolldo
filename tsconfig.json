@@ -16,7 +16,9 @@
     "jsx": "react",
     "paths": {
       "@store": ["./src/store"],
-      "@components/*": ["./src/components/*"]
+      "@components/*": ["./src/components/*"],
+      "@worker/*": ["./src/worker/*"],
+      "@/*": ["./src/*"]
     }
   },
   "include": ["./src"]

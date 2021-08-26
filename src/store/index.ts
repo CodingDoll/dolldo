@@ -1,8 +1,9 @@
-import { makeAutoObservable } from "mobx";
+import { autorun, makeAutoObservable } from "mobx";
 import { createContext } from "react";
 import { nanoid } from "nanoid";
 import _ from "lodash";
 import dayjs, { Dayjs } from "dayjs";
+import { notification } from "@worker/notification";
 
 interface Group {
   id: string;
@@ -155,6 +156,11 @@ export class TodoStore {
   }
 }
 
-const todoStore = new TodoStore();
+export const todoStore = new TodoStore();
+
+// todos 变化发送到 webworker 中等待提醒
+const postWorkerTodos = autorun(() => {
+  notification.postMessage(JSON.stringify(todoStore.todos));
+});
 
 export const TodoContext = createContext<TodoStore>(todoStore);
