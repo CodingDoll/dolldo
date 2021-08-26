@@ -21,19 +21,19 @@ export interface Todo {
   notification?: Dayjs | null;
   deadline?: Dayjs | null;
   repeat?: RepeatOptions | null;
+  alreadyRepeat?: boolean;
   customRepeat?: { count: number; unit: string };
   description?: string;
 }
 
-type TodoOptions = Partial<Omit<Todo, "listId" | "id" | "createAt">>;
+type TodoOptions = Partial<Omit<Todo, "listId" | "id" | "createAt" | "status">>;
 
 export enum RepeatOptions {
-  EveryDay = 1,
-  EveryWeekDay,
-  EveryWeek,
-  EveryMonth,
-  EveryYear,
-  Custom
+  EveryDay = "day",
+  EveryWeek = "week",
+  EveryMonth = "month",
+  EveryYear = "year",
+  Custom = "custom"
 }
 
 export interface Step {
@@ -85,19 +85,23 @@ export class TodoStore {
     this.setCurrTodo(null);
   }
 
-  addTodo(listId: string, data: { title: string }) {
+  addTodo(listId: string, data: TodoOptions) {
     const todo = {
+      ...data,
       id: nanoid(),
       listId: [listId],
-      title: data.title,
+      title: data.title!,
       status: false,
       createAt: dayjs()
     };
     this.todos.push(todo);
+    return todo;
   }
 
   updateTodo(todo: Todo, options: TodoOptions) {
     const targetIndex = this.todos.findIndex(i => i.id === todo.id);
+    if (options.repeat && !this.todos[targetIndex].deadline)
+      options.deadline = dayjs().endOf("day");
     this.todos[targetIndex] = { ...todo, ...options };
     if (this.currTodo?.id === todo.id) this.currTodo = this.todos[targetIndex];
   }
@@ -114,6 +118,18 @@ export class TodoStore {
 
   setTodoStatus(todo: Todo, cheked: boolean) {
     todo.status = cheked;
+    if (todo.repeat && cheked) {
+      if (todo.alreadyRepeat) return;
+
+      todo.alreadyRepeat = true;
+      const newTodo = {
+        ...todo
+      };
+      newTodo.deadline = todo.deadline?.add(1, todo.repeat as any);
+      newTodo.notification = todo.notification?.add(1, todo.repeat as any);
+      newTodo.alreadyRepeat = false;
+      this.addTodo(newTodo.listId[0], { ...newTodo });
+    }
   }
 
   addTodoStep(todo: Todo, stepTitle: string) {

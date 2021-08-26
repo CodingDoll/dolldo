@@ -26,6 +26,11 @@ const Detail: React.FC = () => {
     todoStore.setCurrTodo(null);
   };
 
+  const updateTodoTitle: React.ChangeEventHandler = e => {
+    const title = (e.target as HTMLInputElement).value;
+    todoStore.updateTodo(currTodo!, { title });
+  };
+
   const setNotification = (value: Dayjs | null) => {
     todoStore.updateTodo(currTodo!, { notification: value });
   };
@@ -46,7 +51,7 @@ const Detail: React.FC = () => {
 
   if (currTodo)
     return (
-      <div className="flex flex-col w-96 max-h-screen">
+      <div className="flex flex-col w-96 min-h-screen max-h-screen">
         <div className="body flex-1 overflow-y-auto bg-gray-100">
           <div className="pt-8 pb-2 bg-white">
             <div className="title flex items-center px-4 pb-2 text-gray-800 text-lg font-bold">
@@ -55,11 +60,19 @@ const Detail: React.FC = () => {
                 checked={currTodo.status}
                 onChange={toggleTodoDone}
               />
-              <span className={currTodo.status ? "line-through" : ""}>
-                {currTodo.title}
-              </span>
+
+              <input
+                className={`font-bold outline-none ${
+                  currTodo.status ? "line-through" : ""
+                }`}
+                value={currTodo.title}
+                onChange={updateTodoTitle}
+              />
             </div>
-            <TodoStep value={currTodo.step && [...currTodo.step]} onChange={handleStepChange} />
+            <TodoStep
+              value={currTodo.step && [...currTodo.step]}
+              onChange={handleStepChange}
+            />
           </div>
 
           <div className="p-2 ">

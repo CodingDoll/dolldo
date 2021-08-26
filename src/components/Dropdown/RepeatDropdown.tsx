@@ -6,7 +6,6 @@ import { RepeatOptions } from "@store";
 
 const zhCNRepeatOptions: Record<any, string> = {
   [RepeatOptions.EveryDay]: "每天",
-  [RepeatOptions.EveryWeekDay]: "工作日",
   [RepeatOptions.EveryWeek]: "每周",
   [RepeatOptions.EveryMonth]: "每月",
   [RepeatOptions.EveryYear]: "每年"

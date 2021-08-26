@@ -15,7 +15,7 @@ const Content: React.FC = () => {
       : "";
 
   return (
-    <div className="content-container flex-1 flex flex-col pt-8 px-8 max-h-screen">
+    <div className="content-container flex-1 flex flex-col pt-12 md:pt-8 px-8 min-h-screen max-h-screen">
       <div className="title pb-4 flex relative text-white text-2xl font-semibold">
         <i className={iconClass}></i>
         <div>{todoStore.currList.title}</div>
