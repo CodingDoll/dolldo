@@ -1,9 +1,9 @@
 let canUseNotiApi = false;
-
-Notification.requestPermission(status => {
-  if (status === "granted") canUseNotiApi = true;
-});
-
+if (window.Notification) {
+  Notification.requestPermission(status => {
+    if (status === "granted") canUseNotiApi = true;
+  });
+}
 export const notification = new Worker("./notification.worker.js");
 
 notification.addEventListener("message", message => {

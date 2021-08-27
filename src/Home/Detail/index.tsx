@@ -51,7 +51,7 @@ const Detail: React.FC = () => {
 
   if (currTodo)
     return (
-      <div className="flex flex-col w-96 min-h-screen max-h-screen">
+      <div className="absolute inset-0 w-screen md:w-96 md:static flex flex-col z-20 min-h-screen max-h-screen">
         <div className="body flex-1 overflow-y-auto bg-gray-100">
           <div className="pt-8 pb-2 bg-white">
             <div className="title flex items-center px-4 pb-2 text-gray-800 text-lg font-bold">
@@ -76,9 +76,9 @@ const Detail: React.FC = () => {
           </div>
 
           <div className="p-2 ">
-            {todoStore.currList.id !== "0" && (
+            {/* {todoStore.currList.id !== "0" && (
               <Cell icon="sun-line" title="添加到“我的一天”" />
-            )}
+            )} */}
             <CellGroup>
               <Dropdown.Notification
                 value={currTodo.notification}

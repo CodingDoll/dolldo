@@ -25,14 +25,14 @@ const TodoItem: React.FC<TodoItemProps> = props => {
     setChecked(checked);
   };
 
-  const stepCaption =
-    props.todo.step &&
-    props.todo.step.length > 0 &&
-    `第 ${props.todo.step.filter(i => i.status).length} 步，共 ${
-      props.todo.step.length
-    } 步`;
-
-  const setDeadline = (value: Dayjs) => {
+  const stepCaption = props.todo.step && props.todo.step.length > 0 && (
+    <span className="flex items-center mr-1">
+      {`第 ${props.todo.step.filter(i => i.status).length} 步，共 ${
+        props.todo.step.length
+      } 步`}
+    </span>
+  );
+  const setCaption = (value: Dayjs) => {
     // 使用 diff 比较天
     const dayDiff = dayjs().endOf("day").diff(value, "day");
     if (dayDiff === 0) return "今天";
@@ -41,17 +41,22 @@ const TodoItem: React.FC<TodoItemProps> = props => {
     else return value.format("MMMDD日，ddd");
   };
   const deadlineCaption = props.todo.deadline && (
-    <>
+    <span className="flex items-center mr-1">
       <i className="ri-calendar-line"></i>
-      {setDeadline(props.todo.deadline)}
-    </>
+      {setCaption(props.todo.deadline)}
+    </span>
   );
   const repeatCaption = props.todo.repeat && (
-    <i className="ri-refresh-line"></i>
+    <span className="flex items-center mr-1">
+      <i className="ri-refresh-line"></i>
+    </span>
   );
 
   const notiCaption = props.todo.notification && (
-    <i className="ri-notification-line"></i>
+    <span className="flex items-center">
+      <i className="ri-notification-line"></i>
+      {setCaption(props.todo.notification)}
+    </span>
   );
 
   return (
@@ -63,10 +68,10 @@ const TodoItem: React.FC<TodoItemProps> = props => {
       <section className="ml-4">
         <div className="text-sm text-white">{props.todo.title}</div>
         <div className="flex items-center text-gray-400 text-xs">
-          <span className="flex items-center mr-1">{stepCaption}</span>
-          <span className="flex items-center mr-1">{deadlineCaption}</span>
-          <span className="flex items-center mr-1">{repeatCaption}</span>
-          <span className="flex items-center">{notiCaption}</span>
+          {stepCaption}
+          {deadlineCaption}
+          {repeatCaption}
+          {notiCaption}
         </div>
       </section>
     </div>

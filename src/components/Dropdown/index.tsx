@@ -30,7 +30,7 @@ const Mask: React.FC = () => {
   const bodyEl = document.getElementsByTagName("body");
 
   return createPortal(
-    <div className="absolute inset-0 opacity-0"></div>,
+    <div className="absolute inset-0 opacity-0 z-40"></div>,
     bodyEl[0]
   );
 };
